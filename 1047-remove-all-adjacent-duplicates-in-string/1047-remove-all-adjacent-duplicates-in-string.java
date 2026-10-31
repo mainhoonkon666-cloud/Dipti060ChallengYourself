@@ -1,18 +1,26 @@
 class Solution {
     public String removeDuplicates(String s) {
-        StringBuilder sb = new StringBuilder();
+        Deque<Character> st = new ArrayDeque<>();
 
-        for (char ch : s.toCharArray()) {
-            int len = sb.length();
-
-            if (len > 0 && sb.charAt(len - 1) == ch) {
-                sb.deleteCharAt(len - 1); // remove duplicate
-            } else {
-                sb.append(ch);
+        for(char ch : s.toCharArray()){
+            if(!st.isEmpty()){
+                if(st.peek() == ch){
+                    st.pop();
+                }else{
+                    st.push(ch);
+                }
+            }else{
+                st.push(ch);
             }
         }
+        StringBuilder sb = new StringBuilder();
 
-        return sb.toString();
+        while(!st.isEmpty()){
+            sb.append(st.peek());
+            st.pop();
+        }
+
+        return sb.reverse().toString();
     }
 }
 
